@@ -1,6 +1,7 @@
 import pandas as pd
 import csv
 
+from classes import User
 
 users = pd.read_csv("users.csv")
 database = pd.read_csv("database.csv")
@@ -42,17 +43,20 @@ def login(username, password):
 
 def dashboard(username):
     database = pd.read_csv("database.csv")
-    user = users.loc[users['username'] == username]
-    print(f"Good day {user['name'][0]} {user['surname'][0]}")
+    users = pd.read_csv("users.csv")
+    user = users.loc[users["username"] == "baddd"]
+    user = User(*[i for i in user.values[0]])
+    print(f"Good day {user.name} {user.surname}")
     print("Your listings:")
     print(database.loc[database["owner"] == username,
-          ["producer", "model", "type", "year", "hp", "cap", "color"]])
+                       ["producer", "model", "type", "year", "hp", "cap", "color"]])
 
 
 def username_exist(username):
+    users = pd.read_csv("users.csv")
     if len(users.loc[users["username"] == username]) == 1:
-        return False
-    return True
+        return True
+    return False
 
 
 def show_cars():
@@ -63,9 +67,12 @@ def show_cars():
 def show_car(car):
     users = pd.read_csv("users.csv")
     database = pd.read_csv("database.csv")
-    owner = database.loc[database["producer"] == car]["owner"]
-    print(users.loc[users["username"] == owner]["name", "surname"])
+    owner = database.iloc[int(car)]["owner"]
+    user = users.loc[users["username"] == owner]
+    user = User(*[i for i in user.values[0]])
+    print(user.name, user.surname)
 
 
 if __name__ == "__main__":
-    pass
+    user = users.loc[users["username"] == "baddd"]
+    user = User(*[i for i in user.values[0]])

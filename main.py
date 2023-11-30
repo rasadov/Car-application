@@ -15,7 +15,7 @@ while (enter != "exit"):
                 continue
         if enter == "register":
             user = input("Create a username: ")
-            if username_exist(user):
+            if username_exist(user) == False:
                 passwordofuser = input("Create a password: ")
                 while len(passwordofuser) < 8:
                     passwordofuser = input(
@@ -25,6 +25,17 @@ while (enter != "exit"):
                 bdofuser = input("Enter birthday ")
                 register(user, nameofuser, surnameofuser,
                          bdofuser, passwordofuser)
+                print("New account registrated")
+                user = 0
+                continue
+            else:
+                print("This username is already taken")
+                user = 0
+                continue
+    if username_exist(user) != True:
+        print("First you have to log in")
+        user = 0
+        continue
     if user != "":
         enter = input("""-Buy a car
 -Sell a car
