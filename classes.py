@@ -1,10 +1,14 @@
 class User():
-    def __init__(self, usern, name, surname, birthday, password):
-        self.usern = usern
+    def __init__(self, username, name, surname, birthday, password, admin):
+        self.username = username
         self.surname = surname
         self.name = name
         self.birthday = birthday
         self.password = password
+        self.admin = admin
+
+    def __str__(self):
+        return self.username
 
 
 class Car():

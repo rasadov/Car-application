@@ -41,14 +41,16 @@ def login(username, password):
     return 0
 
 
-def dashboard(username):
+def dashboard(user: User):
     database = pd.read_csv("database.csv")
-    users = pd.read_csv("users.csv")
-    user = users.loc[users["username"] == "baddd"]
-    user = User(*[i for i in user.values[0]])
+    listings = database.loc[database["owner"] == user.username]
+    if listings.empty:
+        print(f"Good day {user.name} {user.surname}")
+        print("You have no listings")
+        return
     print(f"Good day {user.name} {user.surname}")
     print("Your listings:")
-    print(database.loc[database["owner"] == username,
+    print(database.loc[database["owner"] == user.username,
                        ["producer", "model", "type", "year", "hp", "cap", "color"]])
 
 
@@ -71,6 +73,12 @@ def show_car(car):
     user = users.loc[users["username"] == owner]
     user = User(*[i for i in user.values[0]])
     print(user.name, user.surname)
+
+
+def userclass(user):
+    users = pd.read_csv("users.csv")
+    info = users.loc[users["username"] == user]
+    return User(*[i for i in info.values[0]])
 
 
 if __name__ == "__main__":

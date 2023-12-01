@@ -1,2 +1,3 @@
-username,name,surname,birthday,password
-
+username,name,surname,birthday,password,admin
+rauf,Rauf,Asadov,23/09/2006,randombs,1
+van,Van,Debre,13/11/2002,abcd1234,0
