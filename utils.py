@@ -104,7 +104,20 @@ def customer(enter, user: User):
             else:
                 print("No such command")
         elif enter == "car":
-            pass
+            df = pd.read_csv("database.csv")
+            id = int(input("which car you wanna change? "))
+            if id == "exit" or id >= len(df):
+                return
+            if df.loc[id, "owner"] == user.username:
+                enter = input("What column do you want to change? ")
+                df.loc[id, enter] = input("New value: ")
+                df.to_csv("database.csv", index=False, sep=',')
+            else:
+                print("It's not your car")
+
+        else:
+            print("No such command")
+
     elif enter == "Log out":
         user = 0
     elif enter == "exit":
@@ -150,7 +163,16 @@ def admin(enter, user: User):
             else:
                 print("No such command")
         elif enter == "car":
-            pass
+            df = pd.read_csv("database.csv")
+            id = int(input("which car you wanna change? "))
+            if id == "exit" or id >= len(df):
+                return
+            if df.loc[id, "owner"] == user.username:
+                enter = input("What column do you want to change? ")
+                df.loc[id, enter] = input("New value: ")
+                df.to_csv("database.csv", index=False, sep=',')
+            else:
+                print("Error")
 
     elif enter == "Log out":
         user = 0
@@ -161,7 +183,6 @@ def admin(enter, user: User):
             enter = input("Users or cars: ")
             if enter == "users":
                 df = pd.read_csv('users.csv')
-                # df2 = pd.read_csv('database.py')
                 print(df)
                 enter = input("remove/skip: ")
                 if enter == "skip":
@@ -173,12 +194,21 @@ def admin(enter, user: User):
             if enter == "cars":
                 df = pd.read_csv('database.csv')
                 print(df)
-                enter = input("remove/skip: ")
+                enter = input("remove/edit/skip: ")
                 if enter == "skip":
                     pass
                 elif enter == "remove":
                     ind = int(input("which item to remove? "))
                     database.remove_car(ind - 1, "database.csv")
+                elif enter == "edit":
+                    df = pd.read_csv("database.csv")
+                    print(df)
+                    id = int(input("which car you wanna change? "))
+                    if id == "exit" or id >= len(df):
+                        return
+                    enter = input("What column do you want to change? ")
+                    df.loc[id, enter] = input("New value: ")
+                    df.to_csv("database.csv", index=False, sep=',')
 
     else:
         print("No such command")
