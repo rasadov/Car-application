@@ -86,6 +86,25 @@ def customer(enter, user: User):
         database.add(producer, model, type, year, hp, cap, color, user)
     elif enter == "my account":
         database.dashboard(user)
+        enter = input("change account/car or skip ")
+        if enter == "skip":
+            pass
+        elif enter == "account":
+            enter = input("What do you want to change? ")
+            if enter == "name":
+                user.name = input("New name: ")
+            elif enter == "surname":
+                user.surname = input("New surname: ")
+            elif enter == "birthday":
+                user.birthday = input("New birthday: ")
+            elif enter == "password":
+                password = input("your previous password: ")
+                if password == user.password:
+                    user.password = input("New passwod: ")
+            else:
+                print("No such command")
+        elif enter == "car":
+            pass
     elif enter == "Log out":
         user = 0
     elif enter == "exit":
@@ -100,6 +119,7 @@ def admin(enter, user: User):
         database.show_cars()
         enter = input("which car you wanna buy? ")
         database.show_car(enter)
+
     elif enter == "sell a car":
         producer = input("Enter the producer of the car: ")
         model = input("Enter the model of the car: ")
@@ -109,10 +129,32 @@ def admin(enter, user: User):
         cap = input("Enter the engine capacity of the car: ")
         color = input("Enter the color of the car: ")
         database.add(producer, model, type, year, hp, cap, color, user)
+
     elif enter == "my account":
-        database.dashboard(user)
+        df = database.dashboard(user)
+        enter = input("change account/car or skip ")
+        if enter == "skip":
+            pass
+        elif enter == "account":
+            enter = input("What do you want to change? ")
+            if enter == "name":
+                user.name = input("New name: ")
+            elif enter == "surname":
+                user.surname = input("New surname: ")
+            elif enter == "birthday":
+                user.birthday = input("New birthday: ")
+            elif enter == "password":
+                password = input("your previous password: ")
+                if password == user.password:
+                    user.password = input("New passwod: ")
+            else:
+                print("No such command")
+        elif enter == "car":
+            pass
+
     elif enter == "Log out":
         user = 0
+
     elif enter == "database":
         print("In order to leave this page enter '0' ")
         while (enter != '0'):
@@ -121,17 +163,17 @@ def admin(enter, user: User):
                 df = pd.read_csv('users.csv')
                 # df2 = pd.read_csv('database.py')
                 print(df)
-                enter = input("remove/skip/edit: ")
+                enter = input("remove/skip: ")
                 if enter == "skip":
                     pass
                 elif enter == "remove":
                     ind = int(input("which item to remove? "))
-                    database.remove_user(ind - 1, "users.csv")
+                    database.remove_user(ind - 1, "users.csv", "database.csv")
 
             if enter == "cars":
                 df = pd.read_csv('database.csv')
                 print(df)
-                enter = input("remove/skip/edit: ")
+                enter = input("remove/skip: ")
                 if enter == "skip":
                     pass
                 elif enter == "remove":

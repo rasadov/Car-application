@@ -43,17 +43,18 @@ def login(username, password):
 def dashboard(user: User):
     database = pd.read_csv("database.csv")
     listings = database.loc[database["owner"] == user.username]
-    print()
     if listings.empty:
-        print(f"Good day {user.name} {user.surname}")
+        print(f"\nGood day {user.name} {user.surname}")
         print("You have no listings")
         print()
         return
-    print(f"Good day {user.name} {user.surname}")
+    database = database.loc[database["owner"] == user.username]
+    print(f"{user.name} {user.surname}\n")
+    print(f"birthday: {user.birthday}")
+
     print("Your listings:")
-    print(database.loc[database["owner"] == user.username,
-                       ["producer", "model", "type", "year", "hp", "cap", "color"]])
-    print()
+    print(database[["producer", "model", "type", "year", "hp", "cap", "color"]])
+    return database
 
 
 def username_exist(username: str):
@@ -99,7 +100,22 @@ def remove_car(index, path):
         print(f"Invalid row index: {index}")
 
 
-def remove_user(index, path):
+def remove_user(index, path, pathd):
+    data = pd.read_csv(path)
+    database = pd.read_csv("database.csv")
+    if 0 <= index < len(data):
+        # Delete the specified row
+        name = data.iloc[index].values[0]
+        database = database.loc[database["owner"] != name]
+        data = data.drop(index)
+        data.to_csv('users.csv', sep=',', index=False)
+        database.to_csv(pathd, sep=',', index=False)
+        print(f"Row at index {index} deleted successfully.")
+    else:
+        print(f"Invalid row index: {index}")
+
+
+def edit_user(index, path):
     with open(path, 'r') as file:
         csv_reader = csv.reader(file)
         data = list(csv_reader)
