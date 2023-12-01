@@ -83,6 +83,38 @@ def userclass(user):
     return User(*[i for i in info.values[0]])
 
 
+def remove_car(index, path):
+    with open(path, 'r') as file:
+        csv_reader = csv.reader(file)
+        data = list(csv_reader)
+    if 0 <= index < len(data):
+        # Delete the specified row
+        del data[index]
+
+        with open(path, 'w', newline='') as file:
+            csv_writer = csv.writer(file)
+            csv_writer.writerows(data)
+        print(f"Row at index {index} deleted successfully.")
+    else:
+        print(f"Invalid row index: {index}")
+
+
+def remove_user(index, path):
+    with open(path, 'r') as file:
+        csv_reader = csv.reader(file)
+        data = list(csv_reader)
+    if 0 <= index < len(data):
+        # Delete the specified row
+        del data[index]
+
+        with open(path, 'w', newline='') as file:
+            csv_writer = csv.writer(file)
+            csv_writer.writerows(data)
+        print(f"Row at index {index} deleted successfully.")
+    else:
+        print(f"Invalid row index: {index}")
+
+
 if __name__ == "__main__":
     user = users.loc[users["username"] == "baddd"]
     user = User(*[i for i in user.values[0]])

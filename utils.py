@@ -1,5 +1,7 @@
 from classes import User
 import database
+import pandas as pd
+import csv
 
 
 def buy():
@@ -18,26 +20,6 @@ def sell(user: User):
     color = input("Enter the color of the car: ")
     a = user.__str__()
     database.add(producer, model, type, year, hp, cap, color, a)
-
-
-def main(enter, user: User):
-    if enter == "buy a car":
-        database.show_cars()
-        enter = input("which car you wanna buy? ")
-        database.show_car(enter)
-    if enter == "sell a car":
-        producer = input("Enter the producer of the car: ")
-        model = input("Enter the model of the car: ")
-        type = input("Enter the type of the car (sedan, suv, sportcar,...): ")
-        year = input("Enter the year of production of the car: ")
-        hp = input("Enter the hp of the car: ")
-        cap = input("Enter the engine capacity of the car: ")
-        color = input("Enter the color of the car: ")
-        database.add(producer, model, type, year, hp, cap, color, user)
-    if enter == "my account":
-        database.dashboard(user)
-    if enter == "Log out":
-        user = 0
 
 
 def check_user():
@@ -73,6 +55,8 @@ def check_user():
             print("This username is already taken")
             user = 0
             return False
+    elif enter == "exit":
+        return "exit"
     else:
         print("No such command")
         return "exit"
@@ -84,6 +68,78 @@ def check_user():
         user = 0
         return False
     return database.userclass(user)
+
+
+def customer(enter, user: User):
+    if enter == "buy a car":
+        database.show_cars()
+        enter = input("which car you wanna buy? ")
+        database.show_car(enter)
+    elif enter == "sell a car":
+        producer = input("Enter the producer of the car: ")
+        model = input("Enter the model of the car: ")
+        type = input("Enter the type of the car (sedan, suv, sportcar,...): ")
+        year = input("Enter the year of production of the car: ")
+        hp = input("Enter the hp of the car: ")
+        cap = input("Enter the engine capacity of the car: ")
+        color = input("Enter the color of the car: ")
+        database.add(producer, model, type, year, hp, cap, color, user)
+    elif enter == "my account":
+        database.dashboard(user)
+    elif enter == "Log out":
+        user = 0
+    elif enter == "exit":
+        return "exit"
+
+    else:
+        print("No such command")
+
+
+def admin(enter, user: User):
+    if enter == "buy a car":
+        database.show_cars()
+        enter = input("which car you wanna buy? ")
+        database.show_car(enter)
+    elif enter == "sell a car":
+        producer = input("Enter the producer of the car: ")
+        model = input("Enter the model of the car: ")
+        type = input("Enter the type of the car (sedan, suv, sportcar,...): ")
+        year = input("Enter the year of production of the car: ")
+        hp = input("Enter the hp of the car: ")
+        cap = input("Enter the engine capacity of the car: ")
+        color = input("Enter the color of the car: ")
+        database.add(producer, model, type, year, hp, cap, color, user)
+    elif enter == "my account":
+        database.dashboard(user)
+    elif enter == "Log out":
+        user = 0
+    elif enter == "database":
+        print("In order to leave this page enter '0' ")
+        while (enter != '0'):
+            enter = input("Users or cars: ")
+            if enter == "users":
+                df = pd.read_csv('users.csv')
+                # df2 = pd.read_csv('database.py')
+                print(df)
+                enter = input("remove/skip/edit: ")
+                if enter == "skip":
+                    pass
+                elif enter == "remove":
+                    ind = int(input("which item to remove? "))
+                    database.remove_user(ind - 1, "users.csv")
+
+            if enter == "cars":
+                df = pd.read_csv('database.csv')
+                print(df)
+                enter = input("remove/skip/edit: ")
+                if enter == "skip":
+                    pass
+                elif enter == "remove":
+                    ind = int(input("which item to remove? "))
+                    database.remove_car(ind - 1, "database.csv")
+
+    else:
+        print("No such command")
 
 
 if __name__ == "__main__":

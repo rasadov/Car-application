@@ -1,25 +1,35 @@
 from database import login, register, dashboard, add, username_exist, show_cars, show_car, userclass
 from classes import User
-from utils import main, check_user
+import utils
 
 enter = ""
 user = 0
 
 while (enter != "exit"):
     if user == 0:
-        user = check_user()
+        user = utils.check_user()
         if user == False:
             user = 0
             continue
         elif user == "exit":
             break
-
-    enter = input("""-Buy a car
+    if user.admin == 0:
+        enter = input("""-Buy a car
 -Sell a car
 -My account
 -Log out
 """)
-    main(enter, user)
+        utils.customer(enter, user)
+
+    if user.admin == 1:
+        enter = input("""
+-Buy a car
+-Sell a car
+-My account
+-Database
+-Log out
+""")
+        utils.admin(enter, user)
 
 
 """
