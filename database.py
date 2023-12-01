@@ -35,26 +35,28 @@ def login(username, password):
     if len(users.loc[users["username"] == username]) == 1:
         if len(users.loc[(users["username"] == username) & (users["password"] == password)]) == 1:
             return 1
-    else:
-        username = 0
-        print("No such account")
+    # else:
+        # username = 0
     return 0
 
 
 def dashboard(user: User):
     database = pd.read_csv("database.csv")
     listings = database.loc[database["owner"] == user.username]
+    print()
     if listings.empty:
         print(f"Good day {user.name} {user.surname}")
         print("You have no listings")
+        print()
         return
     print(f"Good day {user.name} {user.surname}")
     print("Your listings:")
     print(database.loc[database["owner"] == user.username,
                        ["producer", "model", "type", "year", "hp", "cap", "color"]])
+    print()
 
 
-def username_exist(username):
+def username_exist(username: str):
     users = pd.read_csv("users.csv")
     if len(users.loc[users["username"] == username]) == 1:
         return True
