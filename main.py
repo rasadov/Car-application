@@ -5,6 +5,7 @@ import utils
 enter = ""
 user = 0
 
+
 while (enter != "exit"):
     if user == 0:
         user = utils.check_user()
@@ -14,20 +15,23 @@ while (enter != "exit"):
         elif user == "exit":
             break
     if user.admin == 0:
-        enter = input("""-Buy a car
--Sell a car
+        enter = input("""
+-Buy
+-Sell
+-Card
 -My account
--Log out
+-Exit
 """)
         utils.customer(enter, user)
 
     if user.admin == 1:
         enter = input("""
--Buy a car
--Sell a car
+-Buy
+-Sell
 -My account
+-Dashboard
 -Database
--Log out
+-exit
 """)
         utils.admin(enter, user)
 

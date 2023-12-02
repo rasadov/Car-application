@@ -18,6 +18,7 @@ def add(producer, model, type, year, hp, cap, color, user):
 
 
 def register(username, name: None, surname: None, birthday: None, password):
+    users = pd.read_csv("users.csv")
     if username in users["username"]:
         print("this username is already being used.")
         return 0
@@ -28,7 +29,7 @@ def register(username, name: None, surname: None, birthday: None, password):
         csv_writer = csv.writer(storage2, delimiter=',',
                                 quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
-        csv_writer.writerow((username, name, surname, birthday, password))
+        csv_writer.writerow((username, name, surname, birthday, password, 0))
 
 
 def login(username, password):
@@ -148,15 +149,14 @@ def add_to_card(user: User, id: int):
             (user.username, id))
 
 
-def remove_from_card(ind):
+def remove_from_card(user: User, ind):
     df = pd.read_csv("card.csv")
-    df = df.drop(ind)
-    print(df)
-    df.to_csv('card.csv', sep=',', index=False)
+    if df.iloc[ind]["username"] == user.username:
+        df = df.drop(ind)
+        df.to_csv('card.csv', sep=',', index=False)
+    else:
+        print("You can't access this index")
 
 
 if __name__ == "__main__":
-    baba = User("baba", "baba", "baba", 2002, "randombs", 0)
-    # add_to_card(baba, 1)
-    # show_card(baba)
-    # remove_from_card(1)
+    pass

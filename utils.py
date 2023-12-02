@@ -71,11 +71,25 @@ def check_user():
 
 
 def customer(enter, user: User):
-    if enter == "buy a car":
+    if enter == "buy":
         database.show_cars()
         enter = input("which car you wanna buy? ")
         database.show_car(enter)
-    elif enter == "sell a car":
+
+    elif enter == "card":
+        enter = input("show/add/remove? ")
+        if enter == "show":
+            database.show_card(user)
+        elif enter == "add":
+            database.show_cars()
+            enter = input("which car? ")
+            database.add_to_card(user, int(enter))
+        elif enter == "remove":
+            database.show_card()
+            enter = input("which car? ")
+            database.remove_from_card(user, int(enter))
+
+    elif enter == "sell":
         producer = input("Enter the producer of the car: ")
         model = input("Enter the model of the car: ")
         type = input("Enter the type of the car (sedan, suv, sportcar,...): ")
@@ -84,6 +98,7 @@ def customer(enter, user: User):
         cap = input("Enter the engine capacity of the car: ")
         color = input("Enter the color of the car: ")
         database.add(producer, model, type, year, hp, cap, color, user)
+
     elif enter == "my account":
         database.dashboard(user)
         enter = input("change account/car or skip ")
@@ -118,8 +133,6 @@ def customer(enter, user: User):
         else:
             print("No such command")
 
-    elif enter == "Log out":
-        user = 0
     elif enter == "exit":
         return "exit"
 
@@ -128,14 +141,27 @@ def customer(enter, user: User):
 
 
 def admin(enter, user: User):
-    if enter == "buy a car":
+    if enter == "card":
+        enter = input("show/add/remove? ")
+        if enter == "show":
+            database.show_card(user)
+        elif enter == "add":
+            database.show_cars()
+            enter = input("which car? ")
+            database.add_to_card(user, int(enter))
+        elif enter == "remove":
+            database.show_card()
+            enter = input("which car? ")
+            database.remove_from_card(user, int(enter))
+
+    elif enter == "buy":
         database.show_cars()
         enter = input("buy/add to card? ")
         if enter == "buy":
             enter = input("which car? ")
             database.show_car(enter)
 
-    elif enter == "sell a car":
+    elif enter == "sell":
         producer = input("Enter the producer of the car: ")
         model = input("Enter the model of the car: ")
         type = input("Enter the type of the car (sedan, suv, sportcar,...): ")
@@ -176,7 +202,7 @@ def admin(enter, user: User):
             else:
                 print("Error")
 
-    elif enter == "Log out":
+    elif enter == "log out":
         user = 0
 
     elif enter == "database":
@@ -217,5 +243,4 @@ def admin(enter, user: User):
 
 
 if __name__ == "__main__":
-    a = User("dfsaf", "dsfj", "asd", 24, "fsfsdf", 1)
-    print(a.username)
+    pass
