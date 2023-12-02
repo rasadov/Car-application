@@ -131,6 +131,32 @@ def edit_user(index, path):
         print(f"Invalid row index: {index}")
 
 
+def show_card(user: User):
+    card = pd.read_csv("card.csv")
+    for i in card[card["username"] == user.username]["items"]:
+        print(database.loc[int(i), ["producer",
+                                    "model", "type", "year", 'hp', "cap", "color"]].to_string(index=False), "\n")
+        pass
+
+
+def add_to_card(user: User, id: int):
+    df = pd.read_csv("database.csv")
+    with open('card.csv', 'a', newline='') as storage2:
+        csv_writer = csv.writer(storage2, delimiter=',',
+                                quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        csv_writer.writerow(
+            (user.username, id))
+
+
+def remove_from_card(ind):
+    df = pd.read_csv("card.csv")
+    df = df.drop(ind)
+    print(df)
+    df.to_csv('card.csv', sep=',', index=False)
+
+
 if __name__ == "__main__":
-    user = users.loc[users["username"] == "baddd"]
-    user = User(*[i for i in user.values[0]])
+    baba = User("baba", "baba", "baba", 2002, "randombs", 0)
+    # add_to_card(baba, 1)
+    # show_card(baba)
+    # remove_from_card(1)

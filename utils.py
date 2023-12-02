@@ -130,8 +130,10 @@ def customer(enter, user: User):
 def admin(enter, user: User):
     if enter == "buy a car":
         database.show_cars()
-        enter = input("which car you wanna buy? ")
-        database.show_car(enter)
+        enter = input("buy/add to card? ")
+        if enter == "buy":
+            enter = input("which car? ")
+            database.show_car(enter)
 
     elif enter == "sell a car":
         producer = input("Enter the producer of the car: ")
