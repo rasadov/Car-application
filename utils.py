@@ -1,7 +1,6 @@
 from classes import User
 import database
 import pandas as pd
-import csv
 
 
 def buy():

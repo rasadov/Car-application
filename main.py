@@ -1,4 +1,3 @@
-from database import login, register, dashboard, add, username_exist, show_cars, show_car, userclass
 from classes import User
 import utils
 
@@ -34,15 +33,3 @@ while (enter != "exit"):
 -exit
 """)
         utils.admin(enter, user)
-
-
-"""
-- create account: 1
-    - admin and customer 0 
-- log in: 1
-    see my dashboard 1
-- cart 0
-- buy cars 1
-- sell cars 1
-
-"""

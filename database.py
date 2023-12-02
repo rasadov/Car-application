@@ -36,8 +36,6 @@ def login(username, password):
     if len(users.loc[users["username"] == username]) == 1:
         if len(users.loc[(users["username"] == username) & (users["password"] == password)]) == 1:
             return 1
-    # else:
-        # username = 0
     return 0
 
 
@@ -90,7 +88,6 @@ def remove_car(index, path):
         csv_reader = csv.reader(file)
         data = list(csv_reader)
     if 0 <= index < len(data):
-        # Delete the specified row
         del data[index]
 
         with open(path, 'w', newline='') as file:
@@ -105,7 +102,6 @@ def remove_user(index, path, pathd):
     data = pd.read_csv(path)
     database = pd.read_csv("database.csv")
     if 0 <= index < len(data):
-        # Delete the specified row
         name = data.iloc[index].values[0]
         database = database.loc[database["owner"] != name]
         data = data.drop(index)
@@ -121,7 +117,6 @@ def edit_user(index, path):
         csv_reader = csv.reader(file)
         data = list(csv_reader)
     if 0 <= index < len(data):
-        # Delete the specified row
         del data[index]
 
         with open(path, 'w', newline='') as file:
